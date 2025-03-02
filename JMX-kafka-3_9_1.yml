@@ -1,0 +1,44 @@
+#This tells JMX Exporter to start immediately without any delay
+startDelaySeconds: 0
+
+# Specifies how JMX Exporter connects to Kafka's JMX interface
+# The default JMX port for Kafka is 9999, you must ensure Kafka is started with JMX enabled
+# jmxUrl: service:jmx:rmi:///jndi/rmi://localhost:9999/jmxrmi
+# When you use JMX Exporter as a Java agent, it should monitor kafka's local JVM directly, not a remote one.
+# This configuration is used only when there is a remote JVM running, but when running the JMX Exporter as a Java agent on the same
+# Kafka instance, there shouldn't be any jxmUrl or hostport. Otherwise, local Kafka will complain and fail to start running.
+
+#For the case JMX authentication is enabled
+username: admin
+password: admin
+
+#This tells JMX Exporter which Kafka metrics to expose.
+whitelistObjectNames:
+
+  - "kafka.log:type=Log,name=Size"
+  #Collects Kafka broker topic-related metrics, such as bytes in/out per topic
+  - "kafka.server:type=BrokerTopicMetrics,name=BytesInPerSec"
+  #Collects all broker topic metrics for every Kafka topic (topic=*)/all topics
+  #- "kafka.server:type=BrokerTopicMetrics,topic=*"
+  #Collects high-level Kafka broker statistics
+  #- "kafka.server:type=KafkaServer,name=BrokerStats"
+  #Fetcher stats for Kafka consumers
+  #- "kafka.consumer:type=ConsumerFetcherManager,client-id=*"
+  #Metrics relates to Kafka producers
+  #- "kafka.producer:type=ProducerMetrics,client-id=*"
+  #Network-level metrics like request rates
+  #- "kafka.network:type=SocketServer,name=SocketServerMetrics"
+  #Metrics for Kafka controllers, which handle leader election and topic management
+  #- "kafka.controller:type=ControllerStats,name=*"
+  #Tracks Kafka's log segment management
+  #- "kafka.server:type=LogManager,name=LogSegments"
+  #Tracks Kafka log flush rates
+  #- "kafka.server:type=LogFlushStats,name=*"
+  #Monitors the Kafka replication process
+  #- "kafka.server:type=ReplicaFetcherManager,name=*"
+  #Captures Java Virtual Machine stats like garbage collection and heap memory
+  #- "kafka.jmx:type=JVMStats,name=*"
+  #Collects Kafka broker memory usage
+  #- "kafka.server:type=BrokerMemoryStats,name=*"
+  #Tracks Kafka disk usage for logs and segments
+  #- "kafka.server:type=BrokerDiskStats,name=*"
