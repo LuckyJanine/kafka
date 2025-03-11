@@ -14,6 +14,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+#Configure Kafka to use JMX Exporter as a javaagent to expose Kafka metrics
+# export KAFKA_OPTS="-javaagent:/home/ubuntu/programs/jmx-exporter/jmx_prometheus_javaagent-1.1.0.jar=9091:/home/ubuntu/repos/kafka/JMX-kafka-3_9_1.yml"
+#export JMX_PORT=9999
+#export KAFKA_OPTS="-Dcom.sun.management.jmxremote
+#                   -Dcom.sun.management.jmxremote.port=9999
+#                   -Dcom.sun.management.jmxremote.authenticate=false
+#                   -Dcom.sun.management.jmxremote.ssl=false"
+export KAFKA_OPTS="-javaagent:/home/ubuntu/programs/jmx-exporter/jmx_prometheus_javaagent-1.1.0.jar=9091:/home/ubuntu/repos/kafka/JMX-kafka-3_9_1.yml"
+#=============================
+
 if [ $# -lt 1 ];
 then
 	echo "USAGE: $0 [-daemon] server.properties [--override property=value]*"

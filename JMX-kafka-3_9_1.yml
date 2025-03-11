@@ -14,8 +14,8 @@ password: admin
 
 #This tells JMX Exporter which Kafka metrics to expose.
 whitelistObjectNames:
-
-  - "kafka.log:type=Log,name=Size"
+  - "kafka.log:type=Log,name=Size,topic=*,partition=*"
+  # - "kafka.log:type=LogFlushStats,name=LogFlushRateAndTimeMs"
   #Collects Kafka broker topic-related metrics, such as bytes in/out per topic
   - "kafka.server:type=BrokerTopicMetrics,name=BytesInPerSec"
   #Collects all broker topic metrics for every Kafka topic (topic=*)/all topics
@@ -41,4 +41,4 @@ whitelistObjectNames:
   #Collects Kafka broker memory usage
   #- "kafka.server:type=BrokerMemoryStats,name=*"
   #Tracks Kafka disk usage for logs and segments
-  #- "kafka.server:type=BrokerDiskStats,name=*"
+  # - "kafka.server:type=BrokerDiskStats,name=*"
