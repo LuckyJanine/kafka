@@ -29,6 +29,7 @@ public class HydraulicLogProducer {
             String message = String.format(
                             "\"aircraft id\": %1$s%n\"" +
                             "-------------------------%n" +
+                            "-----------------------------------------------------%n" +
                             "[2025-02-10 09:05:00] INFO HYD SYS 1: %2$s%n" +
                             "[2025-02-10 09:05:00] INFO HYD SYS 2: %2$s%n" +
                             "[2025-02-10 09:05:00] INFO HYD SYS 3: %2$s%n" +

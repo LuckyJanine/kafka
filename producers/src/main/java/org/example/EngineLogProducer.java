@@ -28,11 +28,11 @@ public class EngineLogProducer {
 
             String message = String.format(
                             "Timestamp: 2024-02-10T09:05:00Z%n" +
-                            "-------------------------%n" +
+                            "----------------------------%n" +
                             "\"flight number\": %s%n" +
                             "\"aircraft id\": %s%n" +
                             "\"engine number\": %d%n" +
-                            "-------------------------%n" +
+                            "----------------------------------%n" +
                             "\"Engine N1 (Fan Speed)\": %.1f%%%n" +
                             "\"Engine N2 (Core Speed)\": %.1f%%%n" +
                             "\"engine thrust\": %d lbs%n" +
@@ -43,11 +43,11 @@ public class EngineLogProducer {
                             "\"Vibration Level\": %.1f IPS%n" +
                             "\"Throttle Lever Angle\": %.1f°%n" +
                             "\"EPR (Engine Pressure Ratio)\": %.2f%n" +
-                            "----------------------------------------" +
+                            "------------------------------------------%n" +
                             "Status: NORMAL%n" +
                             "--------------------------------------------%n" +
                             "Warnings: NONE%n" +
-                            "--------------------------------------------%n" +
+                            "-------------------------------------------------------%n" +
                             "Source: EEC (Electronic Engine Controller)",
                     flightNumber,
                     aircraftId,
@@ -69,7 +69,7 @@ public class EngineLogProducer {
             System.out.println("Sent: " + message);
 
             try {
-                Thread.sleep(1000);
+                Thread.sleep(2000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

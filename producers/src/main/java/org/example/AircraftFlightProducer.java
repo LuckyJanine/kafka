@@ -20,6 +20,9 @@ public class AircraftFlightProducer {
         Random random = new Random();
 
         while(true) {
+
+            // long createTime = System.currentTimeMillis();
+
             int currentAircraftIndex = random.nextInt(numbers.length);
             String flightNumber = "Flight-" + numbers[currentAircraftIndex];
             double latitude = 30 + random.nextDouble() * 40;
@@ -43,7 +46,7 @@ public class AircraftFlightProducer {
                             "\"flap\": %d, " +
                             "\"slat\": %d, " +
                             "\"gear\": %d%n" +
-                            "---------------" +
+                            "---------------------------------------" +
                             "PIREP (Pilot Weather Report):%n" +
                             "\"wind\": %s%n" +
                             "\"wind shear\": %s%n" +
@@ -52,7 +55,7 @@ public class AircraftFlightProducer {
                             "\"visibility\": %d+ km%n" +
                             "\"icing\": %s%n" +
                             "\"barometric pressure\": %d hPa%n" +
-                            "----------" +
+                            "----------------------------------------" +
                             "AP (Autopilot) status:%n" +
                             "[2025-02-10 09:05:00] INFO AUTOPILOT: %s%n" +
                             "[2025-02-10 09:05:00] INFO AUTOPILOT: Mode - %s%n",
