@@ -6,14 +6,16 @@ import java.util.Random;
 
 
 public class AircraftFlightProducer {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         String topic = "flight-atc";
         Properties props = new Properties();
         props.put("bootstrap.servers", "localhost:9092");
         props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
 
-        int[] numbers = {1026, 1789, 1690};
+        int[] numbers = {1549, 143, 32, 751, 780, 236};
+        String[] ids = {"A320-214/N106US", "B767-233/C-GAUN", "A380-842/VH-OQA",
+                        "MD-81/OY-KHO", "A330-342/B-HLL", "A330-243/C-GITS"};
 
         KafkaProducer<String, String> producer = new KafkaProducer<>(props);
 
@@ -25,6 +27,7 @@ public class AircraftFlightProducer {
 
             int currentAircraftIndex = random.nextInt(numbers.length);
             String flightNumber = "Flight-" + numbers[currentAircraftIndex];
+            String aircraftId = ids[currentAircraftIndex];
             double latitude = 30 + random.nextDouble() * 40;
             double longitude = -100 + random.nextDouble() * 80;
             int altitude = 30000 + random.nextInt(10000);
@@ -36,6 +39,7 @@ public class AircraftFlightProducer {
 
             String message = String.format(
                             "\"flight number\": \"%s\"%n" +
+                            "\"aircraft id\": %s%n" +
                             "-------------------------%n" +
                             "------------------------------------------------------------%n" +
                             "\"latitude\": %.2f, \"longitude\": %.2f, \"altitude\": %d%n" +
@@ -59,7 +63,8 @@ public class AircraftFlightProducer {
                             "AP (Autopilot) status:%n" +
                             "[2025-02-10 09:05:00] INFO AUTOPILOT: %s%n" +
                             "[2025-02-10 09:05:00] INFO AUTOPILOT: Mode - %s%n",
-                    flightNumber, latitude, longitude, altitude,
+                    flightNumber, aircraftId,
+                    latitude, longitude, altitude,
                     groundSpeed, airSpeed, heading, remainingFuel,
                     aircraftConfiguration.flap,
                     aircraftConfiguration.slat,
@@ -77,12 +82,14 @@ public class AircraftFlightProducer {
 
             producer.send(new ProducerRecord<>(topic, flightNumber, message));
 
-            // System.out.println("Sent: " + message);
+            System.out.println("atc data Sent for: " + flightNumber);
 
             try {
                 Thread.sleep(500);
             } catch (InterruptedException e) {
                 e.printStackTrace();
+                producer.close();
+                throw new InterruptedException();
             }
         }
     }
