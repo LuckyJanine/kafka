@@ -91,6 +91,7 @@ public class AircraftFlightProducer {
             e.printStackTrace();
         } finally {
             producer.close();
+            System.out.println("atc producer closed ...");
         }
     }
 
