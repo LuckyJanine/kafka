@@ -1,4 +1,5 @@
 package org.example;
+import com.sun.tools.javac.Main;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import java.util.Properties;
@@ -21,7 +22,7 @@ public class AircraftFlightProducer {
 
         Random random = new Random();
         try {
-            while(!Thread.currentThread().isInterrupted()) {
+            while(!Thread.currentThread().isInterrupted() && AircraftProducer.running) {
 
                 // long createTime = System.currentTimeMillis();
 

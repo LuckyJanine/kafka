@@ -24,7 +24,7 @@ public class EngineLogProducer {
 
         try {
 
-            while(!Thread.currentThread().isInterrupted()) {
+            while(!Thread.currentThread().isInterrupted() && AircraftProducer.running) {
                 int currentAircraftIndex = random.nextInt(numbers.length);
                 String flightNumber = "Flight-" + numbers[currentAircraftIndex];
                 String aircraftId = ids[currentAircraftIndex];
