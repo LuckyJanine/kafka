@@ -87,7 +87,8 @@ public class AircraftFlightProducer {
                 Thread.sleep(500);
             }
         } catch (InterruptedException e){
-                e.printStackTrace();
+            Thread.currentThread().interrupt();
+            e.printStackTrace();
         } finally {
             producer.close();
         }
