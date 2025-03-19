@@ -14,60 +14,65 @@ public class HydraulicLogProducer {
         props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
 
-        int[] numbers = {1026, 1789, 1690};
-        String[] ids = {"AC123", "SL456", "HT789"};
+        int[] numbers = {1549, 143, 32, 751, 780, 236};
+        String[] ids = {"A320-214/N106US", "B767-233/C-GAUN", "A380-842/VH-OQA",
+                        "MD-81/OY-KHO", "A330-342/B-HLL", "A330-243/C-GITS"};
 
         KafkaProducer<String, String> producer = new KafkaProducer<>(props);
 
         Random random = new Random();
 
-        while(true) {
-            int currentAircraftIndex = random.nextInt(numbers.length);
-            String flightNumber = "Flight-" + numbers[currentAircraftIndex];
-            String aircraftId = ids[currentAircraftIndex];
+        try {
+            while(!Thread.currentThread().isInterrupted()) {
+                int currentAircraftIndex = random.nextInt(numbers.length);
+                String flightNumber = "Flight-" + numbers[currentAircraftIndex];
+                String aircraftId = ids[currentAircraftIndex];
 
-            String message = String.format(
-                            "\"aircraft id\": %1$s%n\"" +
-                            "-------------------------%n" +
-                            "-----------------------------------------------------%n" +
-                            "[2025-02-10 09:05:00] INFO HYD SYS 1: %2$s%n" +
-                            "[2025-02-10 09:05:00] INFO HYD SYS 2: %2$s%n" +
-                            "[2025-02-10 09:05:00] INFO HYD SYS 3: %2$s%n" +
-                            "[2025-02-10 09:05:00] INFO HYD SYS 1 TEMP: %3$s%n" +
-                            "[2025-02-10 09:05:00] INFO HYD SYS 2 TEMP: %3$s%n" +
-                            "[2025-02-10 09:05:00] INFO HYD SYS 3 TEMP: %3$s%n" +
-                            "[2025-02-10 09:05:02] INFO HYD SYS 1: %2$s%n" +
-                            "[2025-02-10 09:05:02] INFO HYD SYS 2: %2$s%n" +
-                            "[2025-02-10 09:05:02] INFO HYD SYS 3: %2$s%n" +
-                            "[2025-02-10 09:05:02] INFO HYD SYS 1 TEMP: %3$s%n" +
-                            "[2025-02-10 09:05:02] INFO HYD SYS 2 TEMP: %3$s%n" +
-                            "[2025-02-10 09:05:02] INFO HYD SYS 3 TEMP: %3$s%n" +
-                            "[2025-02-10 09:05:04] INFO HYD SYS 1: %2$s%n" +
-                            "[2025-02-10 09:05:04] INFO HYD SYS 2: %2$s%n" +
-                            "[2025-02-10 09:05:04] INFO HYD SYS 3: %2$s%n" +
-                            "[2025-02-10 09:05:04] INFO HYD SYS 1 TEMP: %3$s%n" +
-                            "[2025-02-10 09:05:04] INFO HYD SYS 2 TEMP: %3$s%n" +
-                            "[2025-02-10 09:05:04] INFO HYD SYS 3 TEMP: %3$s%n" +
-                            "[2025-02-10 09:05:06] INFO HYD SYS 1: %2$s%n" +
-                            "[2025-02-10 09:05:06] INFO HYD SYS 2: %2$s%n" +
-                            "[2025-02-10 09:05:06] INFO HYD SYS 3: %2$s%n" +
-                            "[2025-02-10 09:05:06] INFO HYD SYS 1 TEMP: %3$s%n" +
-                            "[2025-02-10 09:05:06] INFO HYD SYS 2 TEMP: %3$s%n" +
-                            "[2025-02-10 09:05:06] INFO HYD SYS 3 TEMP: %3$s%n",
-                            aircraftId,
-                            "Pressure nominal (3000 PSI)",
-                            "Normal (30°C)"
-            );
+                String message = String.format(
+                        "\"aircraft id\": %1$s%n\"" +
+                                "-------------------------%n" +
+                                "-----------------------------------------------------%n" +
+                                "[2025-02-10 09:05:00] INFO HYD SYS 1: %2$s%n" +
+                                "[2025-02-10 09:05:00] INFO HYD SYS 2: %2$s%n" +
+                                "[2025-02-10 09:05:00] INFO HYD SYS 3: %2$s%n" +
+                                "[2025-02-10 09:05:00] INFO HYD SYS 1 TEMP: %3$s%n" +
+                                "[2025-02-10 09:05:00] INFO HYD SYS 2 TEMP: %3$s%n" +
+                                "[2025-02-10 09:05:00] INFO HYD SYS 3 TEMP: %3$s%n" +
+                                "[2025-02-10 09:05:02] INFO HYD SYS 1: %2$s%n" +
+                                "[2025-02-10 09:05:02] INFO HYD SYS 2: %2$s%n" +
+                                "[2025-02-10 09:05:02] INFO HYD SYS 3: %2$s%n" +
+                                "[2025-02-10 09:05:02] INFO HYD SYS 1 TEMP: %3$s%n" +
+                                "[2025-02-10 09:05:02] INFO HYD SYS 2 TEMP: %3$s%n" +
+                                "[2025-02-10 09:05:02] INFO HYD SYS 3 TEMP: %3$s%n" +
+                                "[2025-02-10 09:05:04] INFO HYD SYS 1: %2$s%n" +
+                                "[2025-02-10 09:05:04] INFO HYD SYS 2: %2$s%n" +
+                                "[2025-02-10 09:05:04] INFO HYD SYS 3: %2$s%n" +
+                                "[2025-02-10 09:05:04] INFO HYD SYS 1 TEMP: %3$s%n" +
+                                "[2025-02-10 09:05:04] INFO HYD SYS 2 TEMP: %3$s%n" +
+                                "[2025-02-10 09:05:04] INFO HYD SYS 3 TEMP: %3$s%n" +
+                                "[2025-02-10 09:05:06] INFO HYD SYS 1: %2$s%n" +
+                                "[2025-02-10 09:05:06] INFO HYD SYS 2: %2$s%n" +
+                                "[2025-02-10 09:05:06] INFO HYD SYS 3: %2$s%n" +
+                                "[2025-02-10 09:05:06] INFO HYD SYS 1 TEMP: %3$s%n" +
+                                "[2025-02-10 09:05:06] INFO HYD SYS 2 TEMP: %3$s%n" +
+                                "[2025-02-10 09:05:06] INFO HYD SYS 3 TEMP: %3$s%n",
+                        aircraftId,
+                        "Pressure nominal (3000 PSI)",
+                        "Normal (30°C)"
+                );
 
-            producer.send(new ProducerRecord<>(topic, flightNumber, message));
+                producer.send(new ProducerRecord<>(topic, flightNumber, message));
 
-            // System.out.println("Sent: " + message);
+                System.out.println("hydraulic log data Sent: " + flightNumber);
 
-            try {
                 Thread.sleep(5000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
             }
+        } catch (InterruptedException e){
+            Thread.currentThread().interrupt();
+            e.printStackTrace();
+        } finally {
+            producer.close();
+            System.out.println("hydraulic log producer closed ...");
         }
     }
 }
