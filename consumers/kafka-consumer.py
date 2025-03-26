@@ -20,7 +20,10 @@ def interrupt_signal_handler(sig, frame):
     print("\nStopping consumers...")
     for thread in threading.enumerate():
         if thread is not threading.main_thread():
-            thread.join()
+            # blocks the calling thread until the thread whose join() method is called terminates
+            # either normally or through an unhandled exception
+            # or until the optional timeout occurs
+            thread.join(timeout=None)
     print("\n========\nAll worker threads stopped.")
 
 def create_consumer(group):
