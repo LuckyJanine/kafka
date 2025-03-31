@@ -7,10 +7,10 @@ SELECT EXISTS (
 
 create_msg_consumption_table = """
 CREATE TABLE IF NOT EXISTS message_consumption (
-    id SERIAL PRIMARY KEY,
+    message_id UUID NOT NULL,
     topic_name VARCHAR(50) NOT NULL,
     partition INT NOT NULL,
-    offset INT,
+    "offset" INT,
     log_append_time TIMESTAMP,
     receiving_time TIMESTAMP,
     processed_time TIMESTAMP,
