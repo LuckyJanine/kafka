@@ -80,7 +80,7 @@ public class AircraftFlightProducer {
                         "Altitude Hold"
                 );
 
-                producer.send(new ProducerRecord<>(topic, flightNumber, message));
+                producer.send(new ProducerRecord<>(topic, message));
 
                 System.out.println("atc data Sent for: " + flightNumber);
 

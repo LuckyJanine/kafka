@@ -61,7 +61,7 @@ public class HydraulicLogProducer {
                         "Normal (30°C)"
                 );
 
-                producer.send(new ProducerRecord<>(topic, flightNumber, message));
+                producer.send(new ProducerRecord<>(topic, message));
 
                 System.out.println("hydraulic log data Sent: " + flightNumber);
 

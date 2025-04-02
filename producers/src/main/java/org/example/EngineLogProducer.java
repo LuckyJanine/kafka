@@ -67,7 +67,7 @@ public class EngineLogProducer {
                         1.68
                 );
 
-                producer.send(new ProducerRecord<>(topic, flightNumber, message));
+                producer.send(new ProducerRecord<>(topic, message));
 
                 System.out.println("engine log data Sent: " + flightNumber);
 
