@@ -12,6 +12,7 @@ public class AircraftFlightProducer {
         props.put("bootstrap.servers", "localhost:9092");
         props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
+        props.put("partitioner", "round_robin");
 
         int[] numbers = {1549, 143, 32, 751, 780, 236};
         String[] ids = {"A320-214/N106US", "B767-233/C-GAUN", "A380-842/VH-OQA",

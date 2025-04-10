@@ -13,6 +13,7 @@ public class HydraulicLogProducer {
         props.put("bootstrap.servers", "localhost:9092");
         props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
+        props.put("partitioner", "round_robin");
 
         int[] numbers = {1549, 143, 32, 751, 780, 236};
         String[] ids = {"A320-214/N106US", "B767-233/C-GAUN", "A380-842/VH-OQA",
@@ -38,24 +39,42 @@ public class HydraulicLogProducer {
                                 "[2025-02-10 09:05:00] INFO HYD SYS 1 TEMP: %3$s%n" +
                                 "[2025-02-10 09:05:00] INFO HYD SYS 2 TEMP: %3$s%n" +
                                 "[2025-02-10 09:05:00] INFO HYD SYS 3 TEMP: %3$s%n" +
-                                "[2025-02-10 09:05:02] INFO HYD SYS 1: %2$s%n" +
-                                "[2025-02-10 09:05:02] INFO HYD SYS 2: %2$s%n" +
-                                "[2025-02-10 09:05:02] INFO HYD SYS 3: %2$s%n" +
-                                "[2025-02-10 09:05:02] INFO HYD SYS 1 TEMP: %3$s%n" +
-                                "[2025-02-10 09:05:02] INFO HYD SYS 2 TEMP: %3$s%n" +
-                                "[2025-02-10 09:05:02] INFO HYD SYS 3 TEMP: %3$s%n" +
-                                "[2025-02-10 09:05:04] INFO HYD SYS 1: %2$s%n" +
-                                "[2025-02-10 09:05:04] INFO HYD SYS 2: %2$s%n" +
-                                "[2025-02-10 09:05:04] INFO HYD SYS 3: %2$s%n" +
-                                "[2025-02-10 09:05:04] INFO HYD SYS 1 TEMP: %3$s%n" +
-                                "[2025-02-10 09:05:04] INFO HYD SYS 2 TEMP: %3$s%n" +
-                                "[2025-02-10 09:05:04] INFO HYD SYS 3 TEMP: %3$s%n" +
-                                "[2025-02-10 09:05:06] INFO HYD SYS 1: %2$s%n" +
-                                "[2025-02-10 09:05:06] INFO HYD SYS 2: %2$s%n" +
-                                "[2025-02-10 09:05:06] INFO HYD SYS 3: %2$s%n" +
-                                "[2025-02-10 09:05:06] INFO HYD SYS 1 TEMP: %3$s%n" +
-                                "[2025-02-10 09:05:06] INFO HYD SYS 2 TEMP: %3$s%n" +
-                                "[2025-02-10 09:05:06] INFO HYD SYS 3 TEMP: %3$s%n",
+                                "[2025-02-10 09:05:05] INFO HYD SYS 1: %2$s%n" +
+                                "[2025-02-10 09:05:05] INFO HYD SYS 2: %2$s%n" +
+                                "[2025-02-10 09:05:05] INFO HYD SYS 3: %2$s%n" +
+                                "[2025-02-10 09:05:05] INFO HYD SYS 1 TEMP: %3$s%n" +
+                                "[2025-02-10 09:05:05] INFO HYD SYS 2 TEMP: %3$s%n" +
+                                "[2025-02-10 09:05:05] INFO HYD SYS 3 TEMP: %3$s%n" +
+                                "[2025-02-10 09:05:10] INFO HYD SYS 1: %2$s%n" +
+                                "[2025-02-10 09:05:10] INFO HYD SYS 2: %2$s%n" +
+                                "[2025-02-10 09:05:10] INFO HYD SYS 3: %2$s%n" +
+                                "[2025-02-10 09:05:10] INFO HYD SYS 1 TEMP: %3$s%n" +
+                                "[2025-02-10 09:05:10] INFO HYD SYS 2 TEMP: %3$s%n" +
+                                "[2025-02-10 09:05:10] INFO HYD SYS 3 TEMP: %3$s%n" +
+                                "[2025-02-10 09:05:15] INFO HYD SYS 1: %2$s%n" +
+                                "[2025-02-10 09:05:15] INFO HYD SYS 2: %2$s%n" +
+                                "[2025-02-10 09:05:15] INFO HYD SYS 3: %2$s%n" +
+                                "[2025-02-10 09:05:15] INFO HYD SYS 1 TEMP: %3$s%n" +
+                                "[2025-02-10 09:05:15] INFO HYD SYS 2 TEMP: %3$s%n" +
+                                "[2025-02-10 09:05:15] INFO HYD SYS 3 TEMP: %3$s%n" +
+                                "[2025-02-10 09:05:20] INFO HYD SYS 1: %2$s%n" +
+                                "[2025-02-10 09:05:20] INFO HYD SYS 2: %2$s%n" +
+                                "[2025-02-10 09:05:20] INFO HYD SYS 3: %2$s%n" +
+                                "[2025-02-10 09:05:20] INFO HYD SYS 1 TEMP: %3$s%n" +
+                                "[2025-02-10 09:05:20] INFO HYD SYS 2 TEMP: %3$s%n" +
+                                "[2025-02-10 09:05:20] INFO HYD SYS 3 TEMP: %3$s%n" +
+                                "[2025-02-10 09:05:25] INFO HYD SYS 1: %2$s%n" +
+                                "[2025-02-10 09:05:25] INFO HYD SYS 2: %2$s%n" +
+                                "[2025-02-10 09:05:25] INFO HYD SYS 3: %2$s%n" +
+                                "[2025-02-10 09:05:25] INFO HYD SYS 1 TEMP: %3$s%n" +
+                                "[2025-02-10 09:05:25] INFO HYD SYS 2 TEMP: %3$s%n" +
+                                "[2025-02-10 09:05:25] INFO HYD SYS 3 TEMP: %3$s%n" +
+                                "[2025-02-10 09:05:30] INFO HYD SYS 1: %2$s%n" +
+                                "[2025-02-10 09:05:30] INFO HYD SYS 2: %2$s%n" +
+                                "[2025-02-10 09:05:30] INFO HYD SYS 3: %2$s%n" +
+                                "[2025-02-10 09:05:30] INFO HYD SYS 1 TEMP: %3$s%n" +
+                                "[2025-02-10 09:05:30] INFO HYD SYS 2 TEMP: %3$s%n" +
+                                "[2025-02-10 09:05:30] INFO HYD SYS 3 TEMP: %3$s%n",
                         aircraftId,
                         "Pressure nominal (3000 PSI)",
                         "Normal (30°C)"
@@ -65,7 +84,7 @@ public class HydraulicLogProducer {
 
                 System.out.println("hydraulic log data Sent: " + flightNumber);
 
-                Thread.sleep(5000);
+                Thread.sleep(30000);
             }
         } catch (InterruptedException e){
             Thread.currentThread().interrupt();
