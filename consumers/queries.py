@@ -51,8 +51,8 @@ WHERE message_id = %s
 """
 
 data_load_query = """
-SELECT topic_name, partition, log_append_time, receiving_time, processed_time, consumer_id, offset_lag
-FROM attempt3_0403
+SELECT topic_name, partition, log_append_time, receiving_time, processed_time, consumer_id, consumer_group, offset_lag
+FROM message_consumption
 WHERE processed_time IS NOT NULL
 AND status = 'processed'
 """
