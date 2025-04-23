@@ -107,7 +107,9 @@ def main():
         with db_connection.cursor() as cursor:
             cursor.execute(data_load_query)
             data = cursor.fetchall()
-            df = pd.DataFrame(data, columns=['topic', 'partition', 'log_append_time', 'receiving_time', 'processed_time', 'consumer_id', 'consumer_group', 'offset_lag'])
+            df = pd.DataFrame(data, columns=['topic', 'partition',
+                                             'log_append_time', 'receiving_time', 'processed_time',
+                                             'consumer_id', 'consumer_group', 'offset_lag'])
             df['message_life_time'] = (df['processed_time'] - df['log_append_time']).dt.total_seconds()
             # print(df.dtypes)
             # print(df[['topic', 'partition', 'consumer_id', 'message_life_time', 'offset_lag']].head(10))
