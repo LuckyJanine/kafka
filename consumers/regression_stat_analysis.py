@@ -4,45 +4,14 @@ from queries import data_load_query
 import pandas as pd
 import numpy as np
 
-import lightgbm as lgb
-from lightgbm import LGBMRegressor
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import mean_squared_error
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 import os
 from dotenv import load_dotenv
 
 load_dotenv()
 target_dict = os.getenv('TARGET_DICT')
-
-df = None
-
-def 
-
-def train_and_process(df):
-    topics = df['topic'].unique()
-    for topic in topics:
-        topic_df = df[df['topic'] == topic]
-        X = topic_df[['log_append_hour', 'log_append_minute', 'log_append_second',
-                      'receiving_hour', 'receiving_minute', 'receiving_second',
-                      'processed_hour', 'processed_minute', 'processed_second',
-                      'consumer_id', 'offset_lag']]
-        y = topic_df['message_life_time']
-
-        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-
-        model = LGBMRegressor()
-        model.fit(X_train, y_train)
-
-        y_pred = model.predict(X_test)
-
-        mse = mean_squared_error(y_test, y_pred)
-        rmse = np.sqrt(mse)
-
-        # Print results for the current topic
-        print(f"Topic {topic}:")
-        print(f"Mean Squared Error (MSE): {mse}")
-        print(f"Root Mean Squared Error (RMSE): {rmse}\n")
 
 def main():
     try:
@@ -56,9 +25,13 @@ def main():
                                              'offset_lag', 'payload_size'])
             df['message_life_time'] = (df['processed_time'] - df['log_append_time']).dt.total_seconds()
             df['message_process_time'] = (df['processed_time'] - df['receiving_time']).dt.total_seconds()
-            df['consumer_group_cat'] = df['consumer_group'].astype('category')
-            df['consumer_group_cat'] = df['consumer_group_cat'].cat.codes
-            print(df.dtypes)
+            # df['consumer_group_cat'] = df['consumer_group'].astype('category')
+            # df['consumer_group_cat'] = df['consumer_group_cat'].cat.codes
+            # print(df.dtypes)
+            preprocess_data(df)
+            # kmeans_clustering(df)
+            dbscan_clustering(df)
+            # hdbscan_clustering(df)
             # train_and_process(df)
     except psycopg2.Error as e:
         print(f"connection error database: {e}")
