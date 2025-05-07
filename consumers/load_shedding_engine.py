@@ -11,22 +11,33 @@ PROJECT_SETUP = {
     "hydraulic-logs": "hydraulic_log_group"
 }
 
+class MessageLifetimeExtremes:
+    def __init__(self, base, increase):
+        self.baseline = base
+        self.batch_increase = increase
+    @property
+    def estimate_sum(self):
+        return self.baseline + self.batch_increase
+
+
 # initialize variable
 # key: consumer group
-# value: tuple(baseline, max_batch)
+# value: MessageLifetimeExtremes class
 max_lifetime_by_consumer_group = {
-    "atc_group": (0, 0),
-    "engine_log_group": (0, 0),
-    "hydraulic_log_group": (0, 0)
+    "atc_group": MessageLifetimeExtremes(0, 0),
+    "engine_log_group": MessageLifetimeExtremes(0, 0),
+    "hydraulic_log_group": MessageLifetimeExtremes(0, 0)
 }
 
 df = None
 
 def update_max_lifetime_by_consumer_group(consumer_group, baseline, max_lifetime_increase):
-    current_baseline = max_lifetime_by_consumer_group[consumer_group][0]
-    current_lifetime_increase = max_lifetime_by_consumer_group[consumer_group][1]
-    if baseline > current_baseline or max_lifetime_increase > current_lifetime_increase:
-        max_lifetime_by_consumer_group[consumer_group] = (baseline, max_lifetime_increase)
+    current_baseline = max_lifetime_by_consumer_group[consumer_group].baseline
+    current_lifetime_increase = max_lifetime_by_consumer_group[consumer_group].batch_increase
+    if baseline > current_baseline:
+        max_lifetime_by_consumer_group[consumer_group].baseline = baseline
+    if max_lifetime_increase > current_lifetime_increase:
+        max_lifetime_by_consumer_group[consumer_group].batch_increase = max_lifetime_increase
 
 def main():
     try:
@@ -70,4 +81,13 @@ def main():
 if __name__ == '__main__':
     print("Hello, from Load-shedding Engine!")
     main()
-    print(max_lifetime_by_consumer_group)
+    print("===========================")
+    for group in max_lifetime_by_consumer_group.values():
+        print(f"{group.baseline}, {group.batch_increase}, {group.estimate_sum}")
+    response = input("would you like to proceed with the retention time suggestions?\n (y/n): ").strip().lower()
+    if response == 'y':
+        print("Continuing...")
+    elif response == 'n':
+        print("Stopping the program.\n Please make sure Kafka broker has enough storage for log segments ...")
+    else:
+        print("Invalid input.")
